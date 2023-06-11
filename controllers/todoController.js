@@ -65,9 +65,27 @@ const deleteTodo = async (req, res) => {
 
 }
 
+const editTodo = async (req, res) => {
+    const _id = req.params._id
+    const isDone = req.body.isDone;
+
+    try {
+
+        const editedItem = await Todo.updateOne({ _id }, { $set: { isDone } });
+        return res.status(200).json({ 'message': 'Item updated successfully.' });
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(400)
+                .json({ 'message': 'No item with such id sxists.' });
+        }
+        return res.status(500)
+            .json({ "message": "error occured", "error": error.message });
+    }
+}
 module.exports = {
     getAllTodos,
     getTodo,
     createTodo,
     deleteTodo,
+    editTodo,
 }

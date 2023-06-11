@@ -8,7 +8,9 @@ router.get('/:_id', todoControllers.getTodo);
 
 router.get('/', todoControllers.getAllTodos);
 
-router.post('/', todoSchema, validateRequestSchema, todoControllers.createTodo);
+router.post('/', todoSchema.todoSchema, validateRequestSchema, todoControllers.createTodo);
+
+router.patch('/:_id', todoSchema.todoDoneSchema, validateRequestSchema, todoControllers.editTodo);
 
 router.delete('/:_id', todoControllers.deleteTodo);
 

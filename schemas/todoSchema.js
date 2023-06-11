@@ -8,4 +8,11 @@ const todoSchema = [
         .withMessage('Title cannot be empty or title must contain at least 2 characters not exceeding 50.'),
 ];
 
-module.exports = todoSchema;
+const todoDoneSchema = [
+
+    body('isDone')
+        .notEmpty()
+        .withMessage('Please supply the state of the task.'),
+];
+
+module.exports = { todoSchema, todoDoneSchema, };
