@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/todo', require('./routes/todoRoutes'));
+app.use('/user', require('./routes/userRoutes'));
 
 app.listen(process.env.POT || 3000, (req, res) => {
     console.log('app is up and runnning at port ${process.env.PORT}.');

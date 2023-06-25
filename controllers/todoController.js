@@ -2,8 +2,10 @@ const Todo = require('../models/todoModels');
 
 const getAllTodos = async (req, res) => {
 
+    const userId = req.body.userId;
+
     try {
-        const todoItems = await Todo.find();
+        const todoItems = await Todo.find({ userId });
         return res.status(200)
             .json({ 'message': 'Todo items found successfully', todoItems });
     } catch (error) {
@@ -15,7 +17,7 @@ const getAllTodos = async (req, res) => {
 const getTodo = async (req, res) => {
     const _id = req.params._id;
     try {
-        const todoItem = await Todo.findById({ _id });
+        const todoItem = await Todo.find({ _id });
         if (todoItem === null)
             return res.status(400)
                 .json({ 'message': 'No such item sxists.' });
@@ -32,8 +34,9 @@ const getTodo = async (req, res) => {
 }
 
 const createTodo = async (req, res) => {
-    const { _id, title, isDone } = req.body;
-    const newTodoItem = new Todo({ _id, title, isDone });
+    const { title, isDone, userId } = req.body;
+    console.log(userId);
+    const newTodoItem = new Todo({ title, isDone, userId });
 
     try {
         const savedTodo = await newTodoItem.save();
@@ -70,8 +73,7 @@ const editTodo = async (req, res) => {
     const isDone = req.body.isDone;
 
     try {
-
-        const editedItem = await Todo.updateOne({ _id }, { $set: { isDone } });
+        await Todo.updateOne({ _id }, { $set: { isDone } });
         return res.status(200).json({ 'message': 'Item updated successfully.' });
     } catch (error) {
         if (error.name === "CastError") {

@@ -19,10 +19,12 @@ const todoSchema = mongoose.Schema({
         type: Date,
         required: false,
         default: Date.now(),
-    }
+    },
+    userId: {
+        type: String,
+        required: false,
+    },
 });
-
-
 
 const Todo = mongoose.model('todo', todoSchema);
 
