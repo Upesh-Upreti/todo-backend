@@ -1,4 +1,5 @@
 const Todo = require('../models/todoModels');
+const User = require('../models/userModels');
 
 const getAllTodos = async (req, res) => {
 
@@ -84,6 +85,9 @@ const editTodo = async (req, res) => {
             .json({ "message": "error occured", "error": error.message });
     }
 }
+
+
+
 module.exports = {
     getAllTodos,
     getTodo,

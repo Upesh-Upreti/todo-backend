@@ -40,9 +40,28 @@ const logIn = async (req, res) => {
 
 }
 
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword, userId } = req.body;
 
+    const user = await User.findOne({ _id: userId });
+
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isPasswordCorrect) return res.status(401).json({ 'message': 'Invalid old password' });
+
+    try {
+        user.password = await bcrypt.hash(newPassword, 10);
+        await user.save();
+    } catch (error) {
+        return res.json({ error });
+    }
+
+    return res.status(201).json({ 'message': 'Password has been changed successfully.' });
+
+}
 
 module.exports = {
     signUp,
-    logIn
+    logIn,
+    changePassword,
 }

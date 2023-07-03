@@ -37,4 +37,18 @@ const logInSchema = [
 
 ];
 
-module.exports = { signUpSchema, logInSchema, };
+const changePasswordSchema = [
+
+    body('oldPassword')
+        .notEmpty()
+        .isLength({ min: 8 })
+        .withMessage('Invalid password.'),
+
+    body('newPassword')
+        .notEmpty()
+        .isLength({ min: 8 })
+        .withMessage('Invalid password.'),
+
+];
+
+module.exports = { signUpSchema, logInSchema, changePasswordSchema, };
